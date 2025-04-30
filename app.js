@@ -10,10 +10,14 @@ const userRouter = require('./routers/userRouter')
 const app = express();
 
 app.use('/api/user', userRouter);
+//app.use('/api/product', productRouter);
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
+
+// ENDPOINTS
 // http//localhost:3000/api/user
 // http//localhost:3000/api/user/1
+// http//localhost:3000/api/user/search/car
