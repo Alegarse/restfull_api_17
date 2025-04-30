@@ -9,6 +9,8 @@ const userRouter = require('./routers/userRouter')
 
 const app = express();
 
+app.use(express.json());
+// Middleware que permite usar JSON en el body para pasar datos
 app.use('/api/user', userRouter);
 //app.use('/api/product', productRouter);
 

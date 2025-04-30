@@ -22,7 +22,9 @@ const getUserByName = (req, res) => {
 };
 
 const addUser = (req, res) => {
-
+    const newUser = req.body;
+    console.log(newUser);
+    res.send('Usuario creado');
 }
 
 const deleteUser = (req, res) => {
