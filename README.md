@@ -1,4 +1,4 @@
-## Práctiucas NODEJS   
+## Prácticas NODEJS   
 Repositorio que contiene las prácticas de creación de una APIREST con NodeJs + express   
 
 ## Tecnologías Utilizadas
