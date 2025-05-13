@@ -52,25 +52,23 @@ const getUserByName = async (req, res) => {
   }
 };
 
-const getUserByEdad = async (req, res) => {
-  const { age } = req.params;
+const deleteUser = async (req, res) => {
   try {
-    const users = await userModel.find({edad: age},{});
-    res.send(users);
+    const { idUser } = req.params;
+    const user = await userModel.findByIdAndDelete(idUser);
+    if(!user){
+      return res.status(200).send("No hay usuario con ese Id");
+    }
+    res.status(200).send({status: "Success", message: "El usuario ha sido eliminado"});
   } catch (error) {
     res.status(500).send({status: "Failed", error: error.message})
-  }
-};
-
-const deleteUser = (req, res) => {
-    
+  } 
 }
 
 module.exports = {
   getAllUser,
   getUserById,
   getUserByName,
-  getUserByEdad,
   addUser,
   deleteUser
 };
