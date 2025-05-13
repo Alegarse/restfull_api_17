@@ -7,50 +7,11 @@ const getAllUser = async (req, res) => {
     if(!users.length){
       return res.status(200).send("No hay usuarios");
     }
-    res.status(200).send(users);
+    res.status(200).send({status: "Success", data: users});
   } catch (error) {
     res.status(500).send({status: "Failed", error: error.message})
   }
 };
-
-// Usamos find cuando el resultado solo es unico
-// Usamos flter si queremos que pueda devolver varios resultados
-
-const getUserById = async (req, res) => {
-  const { idUser } = req.params;
-  try {
-    const user = await userModel.find({_id: idUser},{});
-    if(!user.length){
-      return res.status(200).send("No hay usuario con ese Id");
-    }
-    res.status(200).send(user);
-  } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
-  }
-};
-
-const getUserByName = async (req, res) => {
-  const { name } = req.params;
-  try {
-    const users = await userModel.find({name: {$regex: name}},{});
-    if(!users.length){
-      return res.status(200).send("No hay usuarios con ese nombre");
-    }
-    res.status(200).send(users);
-  } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
-  }
-};
-
-/*const getUserByEdad = async (req, res) => {
-  const { age } = req.params;
-  try {
-    const users = await userModel.find({edad: age},{});
-    res.send(users);
-  } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
-  }
-};*/
 
 const addUser = async (req, res) => {
   try {
@@ -62,6 +23,45 @@ const addUser = async (req, res) => {
   }
 }
 
+// Usamos find cuando el resultado solo es unico
+// Usamos flter si queremos que pueda devolver varios resultados
+
+const getUserById = async (req, res) => {
+  try {
+    const { idUser } = req.params;
+    const user = await userModel.findById(idUser);
+    if(!user){
+      return res.status(200).send("No hay usuario con ese Id");
+    }
+    res.status(200).send({status: "Success", data: user});
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
+};
+
+const getUserByName = async (req, res) => {
+  try {
+    const { name } = req.params;
+    const users = await userModel.find({name: {$regex: name, $options: "i" }},{});
+    if(!users.length){
+      return res.status(200).send("No hay usuarios con ese nombre");
+    }
+    res.status(200).send({status: "Success", data: users});
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
+};
+
+const getUserByEdad = async (req, res) => {
+  const { age } = req.params;
+  try {
+    const users = await userModel.find({edad: age},{});
+    res.send(users);
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
+};
+
 const deleteUser = (req, res) => {
     
 }
@@ -70,7 +70,7 @@ module.exports = {
   getAllUser,
   getUserById,
   getUserByName,
-  //getUserByEdad,
+  getUserByEdad,
   addUser,
   deleteUser
 };
