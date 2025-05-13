@@ -13,8 +13,8 @@ router.get("/", getAllUser);
 router.post("/", addUser);
 router.delete("/", deleteUser)
 router.get("/:idUser", getUserById);
-router.get("/searchName/:nombre", getUserByName);
-router.get("/searchAge/:edad", getUserByEdad);
+router.get("/searchName/:name", getUserByName);
+router.get("/searchAge/:age", getUserByEdad);
 
 
 // Ahora exportamos este router creado

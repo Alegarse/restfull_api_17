@@ -7,10 +7,14 @@
 // PATCH -> PATCH PARA ACTUALIZAR PARCIALMENTE RECURSOS -> updateOne
 const PORT = 3000;
 const express = require('express');
-const userRouter = require('./routers/userRouter')
+const userRouter = require('./routers/userRouter');
+// Para tener nuestras variables de entorno en cualquier parte de la aplicacion
+require("dotenv").config();
+const connectToDatabase = require("./db/connectDb");
 
 const app = express();
 
+connectToDatabase();
 // Middleware que permite usar JSON en el body para pasar datos
 // Importante este orden, siempre la configuración antes de meter las rutas
 app.use(express.json());

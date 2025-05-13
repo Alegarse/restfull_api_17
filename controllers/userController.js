@@ -4,6 +4,9 @@ const getAllUser = (req, res) => {
   res.send(users);
 };
 
+// Usamos find cuando el resultado solo es unico
+// Usamos flter si queremos que peuda devolver varios resultados
+
 const getUserById = (req, res) => {
   //const idUser = req.params.idUser;
   const { idUser } = req.params;
@@ -14,18 +17,18 @@ const getUserById = (req, res) => {
 };
 
 const getUserByName = (req, res) => {
-  const { nombre } = req.params;
-  console.log(nombre);
-  const user = users.filter((u) => u.nombre.includes(nombre));
-  if (user.length === 0) return res.status(404).send("No hay usuarios con ese nombre");
+  const { name } = req.params;
+  console.log(name);
+  const user = users.filter((u) => u.nombre.includes(name));
+  if (user.length === 0) return res.status(200).send("No hay usuarios con ese nombre");
   res.send(user);
 };
 
 const getUserByEdad = (req, res) => {
-  const { edad } = req.params;
-  console.log(edad);
-  const user = users.filter((u) => u.edad === parseInt(edad));
-  if (user.length === 0) return res.status(404).send("No hay usuarios con esa edad");
+  const { age } = req.params;
+  console.log(age);
+  const user = users.filter((u) => u.edad === parseInt(age));
+  if (user.length === 0) return res.status(200).send("No hay usuarios con esa edad");
   res.send(user);
 };
 

@@ -59,7 +59,7 @@ const users = [
       id: 8,
       nombre: 'Julián Castillo',
       email: 'julian.castillo@example.com',
-      edad: 35,
+      edad: 40,
       activo: true,
       fechaRegistro: '2020-06-14'
     },
