@@ -13,30 +13,35 @@ const getAllUser = async (req, res) => {
 // Usamos find cuando el resultado solo es unico
 // Usamos flter si queremos que pueda devolver varios resultados
 
-const getUserById = (req, res) => {
+const getUserById = async (req, res) => {
   const { idUser } = req.params;
-  console.log(idUser);
-  const user = users.find((u) => u.id === parseInt(idUser));
-  if (!user) return res.status(200).send("No hay usuarios");
-  res.send(user);
+  try {
+    const user = await userModel.find({_id: idUser},{});
+    res.send(user);
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
 };
 
 const getUserByName = async (req, res) => {
+  const { name } = req.params;
   try {
-    const users = await userModel.find({name: "Ana"},{});
+    const users = await userModel.find({name: {$regex: name}},{});
     res.send(users);
   } catch (error) {
     res.status(500).send({status: "Failed", error: error.message})
   }
 };
 
-const getUserByEdad = (req, res) => {
+/*const getUserByEdad = async (req, res) => {
   const { age } = req.params;
-  console.log(age);
-  const user = users.filter((u) => u.edad === parseInt(age));
-  if (user.length === 0) return res.status(200).send("No hay usuarios con esa edad");
-  res.send(user);
-};
+  try {
+    const users = await userModel.find({edad: age},{});
+    res.send(users);
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
+};*/
 
 const addUser = async (req, res) => {
   try {
@@ -56,7 +61,7 @@ module.exports = {
   getAllUser,
   getUserById,
   getUserByName,
-  getUserByEdad,
+  //getUserByEdad,
   addUser,
   deleteUser
 };

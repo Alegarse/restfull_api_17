@@ -4,7 +4,7 @@ const {
   getAllUser,
   getUserById,
   getUserByName,
-  getUserByEdad, 
+ //getUserByEdad, 
   addUser, 
   deleteUser
 } = require("../controllers/userController");
@@ -14,7 +14,7 @@ router.post("/", addUser);
 router.delete("/", deleteUser)
 router.get("/:idUser", getUserById);
 router.get("/searchName/:name", getUserByName);
-router.get("/searchAge/:age", getUserByEdad);
+//router.get("/searchAge/:age", getUserByEdad);
 
 
 // Ahora exportamos este router creado
