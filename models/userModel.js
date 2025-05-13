@@ -27,6 +27,10 @@ const userSchema = new Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  favourites: {
+    type: [ mongoose.Schema.Types.ObjectId ],
+    ref: "Movie",
+  },
 });
 
 // Nosotro indicamos aqui que todas la sveces que haya un find ejecutado

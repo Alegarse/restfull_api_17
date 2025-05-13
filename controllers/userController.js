@@ -1,4 +1,3 @@
-const users = require("../db/users"); //MOCK
 const userModel = require("../models/userModel"); // Usando ya BBDD MongoDb
 
 const getAllUser = async (req, res) => {
