@@ -5,7 +5,9 @@ const {
   getUserById,
   getUserByName,
   addUser, 
-  deleteUser
+  deleteUser,
+  updateUser,
+  replaceUser
 } = require("../controllers/userController");
 
 router.get("/", getAllUser);
@@ -13,6 +15,8 @@ router.post("/", addUser);
 router.delete("/:idUser", deleteUser);
 router.get("/:idUser", getUserById);
 router.get("/searchName/:name", getUserByName);
+router.patch("/:idUser", updateUser);
+router.put("/:idUser", replaceUser);
 
 
 // Ahora exportamos este router creado

@@ -65,10 +65,54 @@ const deleteUser = async (req, res) => {
   } 
 }
 
+const updateUser = async (req, res) => {
+try {
+    const { idUser } = req.params;
+    const newUser = req.body;
+    const updatedUser = await userModel.findByIdAndUpdate(
+      idUser,
+      newUser,
+      {
+        new: false, // Devuelve el usuario nuevo creado. Si false, el antiguo que se ha sobreescrito
+        runValidators: true // Ejecuta las validaciones del userModel
+      }
+    );
+    if (!updatedUser) {
+      return res.status(200).send("No hay usuario con ese Id");
+    }
+    res.status(200).send({status: "Success", message: "El usuario ha sido modificado"});
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
+}
+
+const replaceUser = async (req, res) => {
+  try {
+    const { idUser } = req.params;
+    const newUser = req.body;
+    const replaceUser = await userModel.findOneAndReplace(
+      { _id: idUser },
+      newUser,
+      {
+        new: true, // Devuelve el usuario nuevo creado. Si false, el antiguo que se ha sobreescrito
+        runValidators: true // Ejecuta las validaciones del userModel
+      }
+    );
+    if (!replaceUser) {
+      return res.status(200).send("No hay usuario con ese Id");
+    }
+    res.status(200).send({status: "Success", message: "El usuario ha sido reemplazado"});
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
+}
+
 module.exports = {
   getAllUser,
   getUserById,
   getUserByName,
   addUser,
-  deleteUser
+  deleteUser,
+  updateUser,
+  replaceUser
 };
