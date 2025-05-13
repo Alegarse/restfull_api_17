@@ -42,7 +42,7 @@ const getUserById = async (req, res) => {
 const getUserByName = async (req, res) => {
   try {
     const { name } = req.params;
-    const users = await userModel.find({name: {$regex: name, $options: "i" }},{});
+    const users = await userModel.find({name: {$regex: name, $options: "i" }});
     if(!users.length){
       return res.status(200).send("No hay usuarios con ese nombre");
     }
