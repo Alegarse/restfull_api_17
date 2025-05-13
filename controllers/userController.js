@@ -1,6 +1,8 @@
-const users = require("../db/users");
+const users = require("../db/users"); //MOCK
+const userModel = require("../models/userModel"); // Usando ya BBDD MongoDb
 
 const getAllUser = (req, res) => {
+  const users = userModel.find({name: "pepe"},{});
   res.send(users);
 };
 
@@ -32,10 +34,16 @@ const getUserByEdad = (req, res) => {
   res.send(user);
 };
 
-const addUser = (req, res) => {
+const addUser = async (req, res) => {
+  //console.log(newUser);
+    //res.send('Usuario creado');
+  try {
     const newUser = req.body;
-    console.log(newUser);
-    res.send('Usuario creado');
+    await userModel.create(newUser);
+    res.status(200).send("El usuario se ha creaado correctamente");
+  } catch (error) {
+    res.status(500).send({status: "Failed", error: error.message})
+  }
 }
 
 const deleteUser = (req, res) => {
