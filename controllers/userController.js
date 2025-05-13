@@ -3,8 +3,11 @@ const userModel = require("../models/userModel"); // Usando ya BBDD MongoDb
 
 const getAllUser = async (req, res) => {
   try {
-    const users = await userModel.find({},{});
-    res.send(users);
+    const users = await userModel.find();
+    if(!users.length){
+      return res.status(200).send("No hay usuarios");
+    }
+    res.status(200).send(users);
   } catch (error) {
     res.status(500).send({status: "Failed", error: error.message})
   }
@@ -17,7 +20,10 @@ const getUserById = async (req, res) => {
   const { idUser } = req.params;
   try {
     const user = await userModel.find({_id: idUser},{});
-    res.send(user);
+    if(!user.length){
+      return res.status(200).send("No hay usuario con ese Id");
+    }
+    res.status(200).send(user);
   } catch (error) {
     res.status(500).send({status: "Failed", error: error.message})
   }
@@ -27,7 +33,10 @@ const getUserByName = async (req, res) => {
   const { name } = req.params;
   try {
     const users = await userModel.find({name: {$regex: name}},{});
-    res.send(users);
+    if(!users.length){
+      return res.status(200).send("No hay usuarios con ese nombre");
+    }
+    res.status(200).send(users);
   } catch (error) {
     res.status(500).send({status: "Failed", error: error.message})
   }
