@@ -1,3 +1,5 @@
+// FICHERO DE ARRANQUE
+
 // GET -> GET PARA OBTENER RECURSOS -> find
 // POST -> POST PARA CREAR RECURSOS -> create
 // PUT -> PUT PARA ACTUALIZAR RECURSOS -> updateOne
@@ -9,8 +11,9 @@ const userRouter = require('./routers/userRouter')
 
 const app = express();
 
-app.use(express.json());
 // Middleware que permite usar JSON en el body para pasar datos
+// Importante este orden, siempre la configuración antes de meter las rutas
+app.use(express.json());
 app.use('/api/user', userRouter);
 //app.use('/api/product', productRouter);
 

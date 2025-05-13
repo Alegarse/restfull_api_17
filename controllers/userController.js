@@ -9,15 +9,23 @@ const getUserById = (req, res) => {
   const { idUser } = req.params;
   console.log(idUser);
   const user = users.find((u) => u.id === parseInt(idUser));
-  if (!user) return res.status(404).send("No hay usuarios");
+  if (!user) return res.status(200).send("No hay usuarios");
   res.send(user);
 };
 
 const getUserByName = (req, res) => {
-  const { name } = req.params;
-  console.log(name);
-  const user = users.filter((u) => u.nombre.includes(name));
-  if (user.length === 0) return res.status(404).send("No hay usuarios");
+  const { nombre } = req.params;
+  console.log(nombre);
+  const user = users.filter((u) => u.nombre.includes(nombre));
+  if (user.length === 0) return res.status(404).send("No hay usuarios con ese nombre");
+  res.send(user);
+};
+
+const getUserByEdad = (req, res) => {
+  const { edad } = req.params;
+  console.log(edad);
+  const user = users.filter((u) => u.edad === parseInt(edad));
+  if (user.length === 0) return res.status(404).send("No hay usuarios con esa edad");
   res.send(user);
 };
 
@@ -35,6 +43,7 @@ module.exports = {
   getAllUser,
   getUserById,
   getUserByName,
+  getUserByEdad,
   addUser,
   deleteUser
 };
