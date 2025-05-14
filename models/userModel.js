@@ -29,7 +29,7 @@ const userSchema = new Schema({
   },
   favourites: {
     type: [ mongoose.Schema.Types.ObjectId ],
-    ref: "Movie",
+    ref: "Movie",//HAce referencia al modelo Movie de MoviesModel.js
   },
 });
 
