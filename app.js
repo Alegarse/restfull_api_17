@@ -9,6 +9,7 @@ const PORT = 3000;
 const express = require('express');
 const userRouter = require('./routers/userRouter');
 const movieRouter = require('./routers/movieRouter');
+const loginRouter = require('./routers/loginRouter');
 // Para tener nuestras variables de entorno en cualquier parte de la aplicacion
 require("dotenv").config();
 const connectToDatabase = require("./db/connectDb");
@@ -23,6 +24,10 @@ app.use('/api/user', userRouter);
 
 // Para las peliculas
 app.use('/api/movies', movieRouter);
+
+//Para el login
+app.use('/api/auth', loginRouter);
+
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);

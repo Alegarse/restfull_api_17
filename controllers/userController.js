@@ -13,7 +13,7 @@ const getAllUser = async (req, res) => {
   }
 };
 
-const addUser = async (req, res) => {
+/* const addUser = async (req, res) => {
   try {
     const newUser = req.body;
     await userModel.create(newUser);
@@ -21,7 +21,7 @@ const addUser = async (req, res) => {
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });
   }
-};
+}; */
 
 // Usamos find cuando el resultado solo es unico
 // Usamos flter si queremos que pueda devolver varios resultados
@@ -167,7 +167,7 @@ module.exports = {
   getAllUser,
   getUserById,
   getUserByName,
-  addUser,
+  //addUser,
   deleteUser,
   updateUser,
   replaceUser,
