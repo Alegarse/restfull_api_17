@@ -4,12 +4,12 @@ const movieModel = require("../models/moviesModel");
 const getAllUser = async (req, res) => {
   try {
     const users = await userModel.find();
-    if(!users.length){
+    if (!users.length) {
       return res.status(200).send("No hay usuarios");
     }
-    res.status(200).send({status: "Success", data: users});
+    res.status(200).send({ status: "Success", data: users });
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
+    res.status(500).send({ status: "Failed", error: error.message });
   }
 };
 
@@ -19,9 +19,9 @@ const addUser = async (req, res) => {
     await userModel.create(newUser);
     res.status(200).send("El usuario se ha creaado correctamente");
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
+    res.status(500).send({ status: "Failed", error: error.message });
   }
-}
+};
 
 // Usamos find cuando el resultado solo es unico
 // Usamos flter si queremos que pueda devolver varios resultados
@@ -29,26 +29,30 @@ const addUser = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { idUser } = req.params;
-    const user = await userModel.findById(idUser);//.populate("favourites");
-    if(!user){
+    const user = await userModel
+      .findById(idUser)
+      .populate({ path: "favourites", select: "-_id title description" });
+    if (!user) {
       return res.status(200).send("No hay usuario con ese Id");
     }
-    res.status(200).send({status: "Success", data: user});
+    res.status(200).send({ status: "Success", data: user });
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
+    res.status(500).send({ status: "Failed", error: error.message });
   }
 };
 
 const getUserByName = async (req, res) => {
   try {
     const { name } = req.params;
-    const users = await userModel.find({name: {$regex: name, $options: "i" }});
-    if(!users.length){
+    const users = await userModel.find({
+      name: { $regex: name, $options: "i" },
+    });
+    if (!users.length) {
       return res.status(200).send("No hay usuarios con ese nombre");
     }
-    res.status(200).send({status: "Success", data: users});
+    res.status(200).send({ status: "Success", data: users });
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
+    res.status(500).send({ status: "Failed", error: error.message });
   }
 };
 
@@ -56,35 +60,35 @@ const deleteUser = async (req, res) => {
   try {
     const { idUser } = req.params;
     const user = await userModel.findByIdAndDelete(idUser);
-    if(!user){
+    if (!user) {
       return res.status(200).send("No hay usuario con ese Id");
     }
-    res.status(200).send({status: "Success", message: "El usuario ha sido eliminado"});
+    res
+      .status(200)
+      .send({ status: "Success", message: "El usuario ha sido eliminado" });
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
-  } 
-}
+    res.status(500).send({ status: "Failed", error: error.message });
+  }
+};
 
 const updateUser = async (req, res) => {
-try {
+  try {
     const { idUser } = req.params;
     const newUser = req.body;
-    const updatedUser = await userModel.findByIdAndUpdate(
-      idUser,
-      newUser,
-      {
-        new: false, // Devuelve el usuario nuevo creado. Si false, el antiguo que se ha sobreescrito
-        runValidators: true // Ejecuta las validaciones del userModel
-      }
-    );
+    const updatedUser = await userModel.findByIdAndUpdate(idUser, newUser, {
+      new: false, // Devuelve el usuario nuevo creado. Si false, el antiguo que se ha sobreescrito
+      runValidators: true, // Ejecuta las validaciones del userModel
+    });
     if (!updatedUser) {
       return res.status(200).send("No hay usuario con ese Id");
     }
-    res.status(200).send({status: "Success", message: "El usuario ha sido modificado"});
+    res
+      .status(200)
+      .send({ status: "Success", message: "El usuario ha sido modificado" });
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
+    res.status(500).send({ status: "Failed", error: error.message });
   }
-}
+};
 
 const replaceUser = async (req, res) => {
   try {
@@ -95,17 +99,19 @@ const replaceUser = async (req, res) => {
       newUser,
       {
         new: true, // Devuelve el usuario nuevo creado. Si false, el antiguo que se ha sobreescrito
-        runValidators: true // Ejecuta las validaciones del userModel
+        runValidators: true, // Ejecuta las validaciones del userModel
       }
     );
     if (!replaceUser) {
       return res.status(200).send("No hay usuario con ese Id");
     }
-    res.status(200).send({status: "Success", message: "El usuario ha sido reemplazado"});
+    res
+      .status(200)
+      .send({ status: "Success", message: "El usuario ha sido reemplazado" });
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
+    res.status(500).send({ status: "Failed", error: error.message });
   }
-}
+};
 
 const addFavouriteMovie = async (req, res) => {
   try {
@@ -114,19 +120,19 @@ const addFavouriteMovie = async (req, res) => {
     if (!user) {
       return res.status(200).send("No hay usuario");
     }
- 
+
     const movie = await movieModel.findById(idMovie);
     if (!movie) {
       return res.status(200).send("No hay peli");
     }
- 
+
     if (user.favourites.includes(idMovie)) {
       return res.status(200).send("La película ya está en favoritos");
     }
- 
+
     user.favourites.push(idMovie);
     user.save();
- 
+
     res.status(200).send({ status: "Success", data: user });
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });
@@ -153,9 +159,9 @@ const delFavouriteMovie = async (req, res) => {
 
     res.status(200).send({ status: "Success", data: user });
   } catch (error) {
-    res.status(500).send({status: "Failed", error: error.message})
+    res.status(500).send({ status: "Failed", error: error.message });
   }
-}
+};
 
 module.exports = {
   getAllUser,
@@ -166,5 +172,5 @@ module.exports = {
   updateUser,
   replaceUser,
   addFavouriteMovie,
-  delFavouriteMovie
+  delFavouriteMovie,
 };
