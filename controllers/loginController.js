@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 
 const signup = async (req, res) => {
@@ -33,6 +34,9 @@ const login = async (req, res) => {
     if (!validatePassword) {
       return res.status(404).send("Usuario o contraseña no validos");
     }
+
+    // ZONA CREACION TOKEN
+    const token =jwt.sign();
  
     res.status(200).send({ status: "Success", data: user });
   } catch (error) {
