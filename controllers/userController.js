@@ -56,9 +56,9 @@ const getUserByName = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteUserProfile = async (req, res) => {
   try {
-    const { idUser } = req.params;
+    const idUser  = req.payload._id;
     const user = await userModel.findByIdAndDelete(idUser);
     if (!user) {
       return res.status(200).send("No hay usuario con ese Id");
@@ -71,9 +71,9 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+const updateUserProfile = async (req, res) => {
   try {
-    const { idUser } = req.params;
+    const idUser  = req.payload._id;
     const newUser = req.body;
     const updatedUser = await userModel.findByIdAndUpdate(idUser, newUser, {
       new: false, // Devuelve el usuario nuevo creado. Si false, el antiguo que se ha sobreescrito
@@ -90,11 +90,11 @@ const updateUser = async (req, res) => {
   }
 };
 
-const replaceUser = async (req, res) => {
+const replaceUserProfile = async (req, res) => {
   try {
-    const { idUser } = req.params;
+    const idUser  = req.payload._id;
     const newUser = req.body;
-    const replaceUser = await userModel.findOneAndReplace(
+    const replaceUserProfile = await userModel.findOneAndReplace(
       { _id: idUser },
       newUser,
       {
@@ -102,7 +102,7 @@ const replaceUser = async (req, res) => {
         runValidators: true, // Ejecuta las validaciones del userModel
       }
     );
-    if (!replaceUser) {
+    if (!replaceUserProfile) {
       return res.status(200).send("No hay usuario con ese Id");
     }
     res
@@ -115,7 +115,8 @@ const replaceUser = async (req, res) => {
 
 const addFavouriteMovie = async (req, res) => {
   try {
-    const { idUser, idMovie } = req.params;
+    const idUser  = req.payload._id;
+    const { idMovie } = req.params;
     const user = await userModel.findById(idUser);
     if (!user) {
       return res.status(200).send("No hay usuario");
@@ -141,7 +142,8 @@ const addFavouriteMovie = async (req, res) => {
 
 const delFavouriteMovie = async (req, res) => {
   try {
-    const { idUser, idMovie } = req.params;
+    const idUser  = req.payload._id;
+    const { idMovie } = req.params;
     const user = await userModel.findById(idUser);
     if (!user) {
       return res.status(200).send("No hay usuario con ese Id");
@@ -165,13 +167,11 @@ const delFavouriteMovie = async (req, res) => {
 
 module.exports = {
   getAllUser,
-  //getUserById,
   getMyProfile,
   getUserByName,
-  //addUser,
-  deleteUser,
-  updateUser,
-  replaceUser,
+  deleteUserProfile,
+  updateUserProfile,
+  replaceUserProfile,
   addFavouriteMovie,
   delFavouriteMovie,
 };
