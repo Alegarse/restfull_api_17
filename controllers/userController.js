@@ -25,10 +25,10 @@ const getAllUser = async (req, res) => {
 
 // Usamos find cuando el resultado solo es unico
 // Usamos flter si queremos que pueda devolver varios resultados
-
-const getUserById = async (req, res) => {
+//const getUserById = async (req, res) => {
+const getMyProfile = async (req, res) => {
   try {
-    const { idUser } = req.params;
+    const idUser  = req.payload._id;
     const user = await userModel
       .findById(idUser)
       .populate({ path: "favourites", select: "-_id title description" });
@@ -165,7 +165,8 @@ const delFavouriteMovie = async (req, res) => {
 
 module.exports = {
   getAllUser,
-  getUserById,
+  //getUserById,
+  getMyProfile,
   getUserByName,
   //addUser,
   deleteUser,
