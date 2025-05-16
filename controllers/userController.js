@@ -124,7 +124,7 @@ const addFavouriteMovie = async (req, res) => {
 
     const movie = await movieModel.findById(idMovie);
     if (!movie) {
-      return res.status(200).send("No hay peli");
+      return res.status(200).send("No existe pelicula con ese Id");
     }
 
     if (user.favourites.includes(idMovie)) {
