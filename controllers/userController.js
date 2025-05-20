@@ -165,6 +165,27 @@ const delFavouriteMovie = async (req, res) => {
   }
 };
 
+const disableUserProfile = async (req, res) => {
+try {
+    const idUser  = req.payload._id;
+    const disabledUser = {
+      isActive: false,
+    };
+    const updatedUser = await userModel.findByIdAndUpdate(idUser, disabledUser, {
+      new: true,
+    });
+    if (!updatedUser) {
+      return res.status(200).send("No hay un usuario activo con ese Id");
+    }
+    res
+      .status(200)
+      .send({ status: "Success", message: "El usuario ha sido modificado", data: updatedUser});
+  } catch (error) {
+    res.status(500).send({ status: "Failed", error: error.message });
+  }
+}
+
+
 module.exports = {
   getAllUser,
   getMyProfile,
@@ -174,4 +195,5 @@ module.exports = {
   replaceUserProfile,
   addFavouriteMovie,
   delFavouriteMovie,
+  disableUserProfile,
 };

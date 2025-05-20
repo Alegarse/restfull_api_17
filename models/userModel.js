@@ -31,11 +31,16 @@ const userSchema = new Schema({
     type: [ mongoose.Schema.Types.ObjectId ],
     ref: "Movie",//HAce referencia al modelo Movie de MoviesModel.js
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  }
 });
 
 // Nosotro indicamos aqui que todas la sveces que haya un find ejecutado
 // no nos muestre la password en la respuesta
 userSchema.pre(/^find/, function (next) {
+  this.find( { isActive: true });
   this.select("-password");
   next(); // Esto es un middleware, indica que debe hacer ahora, en este caso continuar para seguir el flujo
 });

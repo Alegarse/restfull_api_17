@@ -9,6 +9,7 @@ const {
   replaceUserProfile,
   addFavouriteMovie,
   delFavouriteMovie,
+  disableUserProfile,
 } = require("../controllers/userController");
 const { verifyToken, verifyAdmin } = require("../middlewares/auth");
 
@@ -23,6 +24,7 @@ router.patch("/", verifyToken, updateUserProfile);
 router.put("/", verifyToken, replaceUserProfile);
 router.patch("/favourites/:idMovie", verifyToken, addFavouriteMovie);
 router.patch("/removefavourites/:idMovie", verifyToken, delFavouriteMovie);
+router.patch("/disableuser",verifyToken, disableUserProfile)
 
 // Ahora exportamos este router creado
 module.exports = router;
