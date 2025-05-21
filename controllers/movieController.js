@@ -156,7 +156,7 @@ const getCountMoviesCategory = async (req, res) => {
       },
     ]);
     if (movies.length === 0) {
-      return res.status(200).send("No hay películas por esa categoría");
+      return res.status(200).send("No hay películas");
     }
     res.status(200).send({ status: "Success", data: movies });
   } catch (error) {
