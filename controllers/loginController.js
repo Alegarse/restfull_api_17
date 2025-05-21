@@ -2,6 +2,7 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const generateToken = require("../utils/auth-token");
+const { sendEmail } = require("../services/emailServices");
 
 const signup = async (req, res) => {
   try {
@@ -12,7 +13,14 @@ const signup = async (req, res) => {
       email,
       password: await bcrypt.hash(password, 10),
     };
-    await userModel.create(newUser)
+    await userModel.create(newUser);
+
+    const to = email;
+    const subject = "Bienvenido a nuestra App";
+    const html = `<h2>Bienvenido</h2> ${name}</h2>
+                  <p>Gracias por resgistrarte en nuestra aplicación</p>`
+
+    await sendEmail(to,subject,html);
     res.status(200).send("El usuario se ha creado correctamente");
   } catch (error) {
     res.status(500).send({ status: "Failed", error: error.message });

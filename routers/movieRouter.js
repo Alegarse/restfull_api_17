@@ -8,7 +8,8 @@ const {
   removeMovieById,
   updateMovieById,
   getCountMoviesCategory,
-  setCommentToMovie
+  setCommentToMovie,
+  deleteCommentToMovie
 } = require("../controllers/movieController");
 
 router.get("/", getAllMovies);
@@ -17,7 +18,8 @@ router.get("/:idMovie",getMovieById);
 router.post("/", addMovie);
 router.delete("/:idMovie",removeMovieById);
 router.patch("/:idMovie",updateMovieById);
-router.post("/:idMovie", verifyToken, setCommentToMovie);
+router.post("/comments/:idMovie", verifyToken, setCommentToMovie);
+router.delete("/:idMovie/comments/:idComment", verifyToken, setCommentToMovie);
 
 // Ahora exportamos este router creado
 module.exports = router;

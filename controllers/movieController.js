@@ -118,6 +118,25 @@ const setCommentToMovie = async (req, res) => {
   }
 };
 
+const deleteCommentToMovie = async (req, res) => {
+  try {
+    const { idMovie, idComment } = req.params;
+    const movie = await movieModel.findById(idMovie);
+    if (!movie) {
+      return res.status(200).send("No hay películas por ese Id");
+    }
+    if (!movie.comments.includes(idComment)) {
+      return res.status(200).send("La película no tiene este comentario");
+    }
+
+    movie.comments.pull(idComment);
+    movie.save();
+    res.status(200).send({ status: "Success", data: movie });
+  } catch (error) {
+    res.status(500).send({ status: "Failed", error: error.message });
+  }
+};
+
 const getCountMoviesCategory = async (req, res) => {
   try {
     const movies = await movieModel.aggregate([
@@ -155,4 +174,5 @@ module.exports = {
   updateMovieById,
   getCountMoviesCategory,
   setCommentToMovie,
+  deleteCommentToMovie,
 };

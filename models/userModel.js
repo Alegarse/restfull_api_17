@@ -40,7 +40,9 @@ const userSchema = new Schema({
 // Nosotro indicamos aqui que todas la sveces que haya un find ejecutado
 // no nos muestre la password en la respuesta
 userSchema.pre(/^find/, function (next) {
-  this.find( { isActive: true });
+  /* if (this.skipIsActiveFilter) {
+    this.find( { isActive: true });
+  } */
   this.select("-password");
   next(); // Esto es un middleware, indica que debe hacer ahora, en este caso continuar para seguir el flujo
 });
