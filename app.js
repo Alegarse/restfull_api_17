@@ -6,10 +6,10 @@
 // DELETE -> DELETE PARA ELIMINAR RECURSOS -> deteleOne
 // PATCH -> PATCH PARA ACTUALIZAR PARCIALMENTE RECURSOS -> updateOne
 const PORT = 3000;
-const express = require('express');
-const userRouter = require('./routers/userRouter');
-const movieRouter = require('./routers/movieRouter');
-const loginRouter = require('./routers/loginRouter');
+const express = require("express");
+const userRouter = require("./routers/userRouter");
+const movieRouter = require("./routers/movieRouter");
+const loginRouter = require("./routers/loginRouter");
 const cors = require("cors");
 const cron = require("node-cron");
 
@@ -25,22 +25,25 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-connectToDatabase();
+const test = true;
+if (!test) connectToDatabase();
 
-app.use('/api/user', userRouter);
+app.use("/api/user", userRouter);
 // Para las peliculas
-app.use('/api/movies', movieRouter);
+app.use("/api/movies", movieRouter);
 //Para el login
-app.use('/api/auth', loginRouter);
+app.use("/api/auth", loginRouter);
 
-app.listen(PORT, () => {
+if (!test) {
+  app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+  });
+}
 
 cron.schedule("39 18 * * *", async () => {
-  console.log("Ejecutando tarea programada")
+  console.log("Ejecutando tarea programada");
 });
- 
+
 // * * * * *
 // │ │ │ │ │
 // │ │ │ │ └─ Día de la semana (0 - 7) (0 o 7 = Domingo)
@@ -48,4 +51,5 @@ cron.schedule("39 18 * * *", async () => {
 // │ │ └───── Día del mes (1 - 31)
 // │ └─────── Hora (0 - 23)
 // └───────── Minuto (0 - 59)
- 
+
+module.exports = app;

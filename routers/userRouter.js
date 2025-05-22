@@ -14,7 +14,8 @@ const {
 const { verifyToken, verifyAdmin } = require("../middlewares/auth");
 
 // Endpoints iniciales
-router.get("/",verifyToken, verifyAdmin, getAllUser);
+router.get("/", getAllUser);
+//router.get("/",verifyToken, verifyAdmin, getAllUser);
 router.get("/searchName/:name", getUserByName);
 
 // Endpoints tokenizados

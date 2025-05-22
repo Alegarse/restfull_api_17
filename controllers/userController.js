@@ -5,7 +5,7 @@ const getAllUser = async (req, res) => {
   try {
     const users = await userModel.find();
     if (!users.length) {
-      return res.status(200).send("No hay usuarios");
+      return res.status(200).send({message: "No hay usuarios"});
     }
     res.status(200).send({ status: "Success", data: users });
   } catch (error) {
@@ -48,11 +48,11 @@ const getUserByName = async (req, res) => {
       name: { $regex: name, $options: "i" },
     });
     if (!users.length) {
-      return res.status(200).send("No hay usuarios con ese nombre");
+      return res.status(200).send({ message: "No hay usuarios con ese nombre"});
     }
     res.status(200).send({ status: "Success", data: users });
   } catch (error) {
-    res.status(500).send({ status: "Failed", error: error.message });
+    res.status(500).send({ status: "Failed", message: error.message });
   }
 };
 
